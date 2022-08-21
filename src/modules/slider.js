@@ -90,7 +90,7 @@ function createImageSwitchButtonLeft() {
     buttonLeft.style.left = '20px';
     buttonLeft.addEventListener('click', () => {
         clearInterval(autoImageSwitchInterval);
-        setTimeout(restartImageAutoSwitch, 10000);
+        // setTimeout(restartImageAutoSwitch, 10000);
         switchImage('left');
     })
     return buttonLeft
@@ -180,11 +180,11 @@ function positionIndicatorSwitch() {
     })
 }
 
-let autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 3000);
+let autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 5000);
 
-function restartImageAutoSwitch() {
-    autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 3000)
-}
+// function restartImageAutoSwitch() {
+//     autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 3000)
+// }
 
 function autoImageSwitchTimer() {
     switchImage('right')
