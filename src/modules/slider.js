@@ -88,8 +88,11 @@ function createImageSwitchButtonLeft() {
     buttonLeft.style.position = 'absolute';
     buttonLeft.style.top = 'calc(50% - 25px)';
     buttonLeft.style.left = '20px';
-    buttonLeft.addEventListener('click', () => switchImage('left'))
-
+    buttonLeft.addEventListener('click', () => {
+        clearInterval(autoImageSwitchInterval);
+        setTimeout(restartImageAutoSwitch, 10000);
+        switchImage('left');
+    })
     return buttonLeft
 }
 
@@ -104,8 +107,11 @@ function createImageSwitchButtonRight() {
     buttonRight.style.position = 'absolute';
     buttonRight.style.top = 'calc(50% - 25px)';
     buttonRight.style.right = '20px';
-    buttonRight.addEventListener('click', () => switchImage('right'))
-
+    buttonRight.addEventListener('click', () => {
+        clearInterval(autoImageSwitchInterval);
+        setTimeout(restartImageAutoSwitch, 10000);
+        switchImage('right');
+    })
     return buttonRight
 }
 
@@ -119,11 +125,19 @@ function switchImage(direction) {
                 currentPosition--;
                 imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
                 positionIndicatorSwitch();
+            } else {
+                currentPosition = (gallery.length - 1);
+                imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
+                positionIndicatorSwitch();
             }
             break;
         case 'right':
             if (currentPosition !== (gallery.length - 1)) {
                 currentPosition++;
+                imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
+                positionIndicatorSwitch();
+            } else {
+                currentPosition = 0;
                 imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
                 positionIndicatorSwitch();
 
@@ -164,4 +178,14 @@ function positionIndicatorSwitch() {
     dots.forEach(dot => {
         (dot.id === `gallery-dot-${currentPosition}`) ? dot.style.backgroundColor = '#FFFFFF' : dot.style.backgroundColor = '#FFFFFF50'
     })
+}
+
+let autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 3000);
+
+function restartImageAutoSwitch() {
+    autoImageSwitchInterval = setInterval(autoImageSwitchTimer, 3000)
+}
+
+function autoImageSwitchTimer() {
+    switchImage('right')
 }
