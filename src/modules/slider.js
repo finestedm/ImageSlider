@@ -1,12 +1,8 @@
-import image1 from '../images/1.jpg'
-import image2 from '../images/2.jpg'
-import image3 from '../images/3.jpg'
-import image4 from '../images/4.jpg'
-
-const gallery = [image1, image2, image3, image4];
+const gallery = [];
 let currentPosition = 0;
 
-export default function createSliderGallery() {
+export default function createSliderGallery(imagesArray) {
+    imagesArray.forEach(image => gallery.push(image));
     const galleryWindow = document.createElement('div');
     galleryWindow.style.width = '100%';
     galleryWindow.style.height = '100%';
@@ -27,7 +23,8 @@ function createGalleryHolder() {
     galleryHolder.style.width = '100%';
     galleryHolder.style.height = '100%';
     galleryHolder.style.position = 'absolute';
-
+    galleryHolder.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0s'
+    galleryHolder.style.right = '0'
     gallery.forEach(image => {
         galleryHolder.append(createImageHolder(image));
     })
@@ -121,13 +118,15 @@ function switchImage(direction) {
             if (currentPosition !== 0) {
                 currentPosition--;
                 imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
-                positionIndicatorSwitch(currentPosition);
+                positionIndicatorSwitch();
             }
             break;
         case 'right':
             if (currentPosition !== (gallery.length - 1)) {
                 currentPosition++;
                 imageHolder.style.right = `${currentPosition * widthOfTheGallery}px`;
+                positionIndicatorSwitch();
+
             }
             break;
         default:
@@ -147,17 +146,22 @@ function createCurrentPositionIndicator() {
     for (let i = 0; i < gallery.length; i++) {
         const dot = document.createElement('button')
         dot.id = `gallery-dot-${i}`
-        dot.style.width = '5px';
-        dot.style.height = '5px';
+        dot.classList.add(`gallery-dot`)
+        dot.style.width = '10px';
+        dot.style.height = '10px';
         dot.style.border = 'none';
-        dot.style.borderRadius = '100%'
+        dot.style.borderRadius = '100%';
+        dot.style.margin = '0 1%';
+        dot.style.boxShadow = '0 0 10px #000000A0'
+        i === 0 ? dot.style.backgroundColor = '#FFFFFF' : dot.style.backgroundColor = '#FFFFFF50'
         dotHolder.append(dot);
     }
     return dotHolder;
 }
 
 function positionIndicatorSwitch() {
-
-    
+    const dots = document.querySelectorAll('.gallery-dot');
+    dots.forEach(dot => {
+        (dot.id === `gallery-dot-${currentPosition}`) ? dot.style.backgroundColor = '#FFFFFF' : dot.style.backgroundColor = '#FFFFFF50'
+    })
 }
-currentPosition === i ? dot.style.backgroundColor = '#FFFFFF' : dot.style.backgroundColor = '#FFFFFF50'
