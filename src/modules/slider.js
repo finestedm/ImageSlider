@@ -51,12 +51,13 @@ function createBackground(image) {
     backgroundImage.setAttribute('src', `${image}`);
     backgroundImage.style.width = '100%';
     backgroundImage.style.height = '100%';
+    backgroundImage.style.objectFit = 'cover';
+
     backgroundHolder.setAttribute('style', 'filter:blur(5px) brightness(.5)');
     backgroundHolder.style.width = '105%';
     backgroundHolder.style.height = '105%';
     backgroundHolder.style.backgroundRepeat = 'no-repeat';
     backgroundHolder.style.backgroundPosition = 'center';
-    backgroundHolder.style.objectFit = 'cover';
     backgroundHolder.style.position = 'absolute';
     backgroundHolder.style.top = '-5px';
     backgroundHolder.style.left = '-5px';
@@ -90,7 +91,6 @@ function createImageSwitchButtonLeft() {
     buttonLeft.style.left = '20px';
     buttonLeft.addEventListener('click', () => {
         clearInterval(autoImageSwitchInterval);
-        // setTimeout(restartImageAutoSwitch, 10000);
         switchImage('left');
     })
     return buttonLeft
@@ -109,7 +109,6 @@ function createImageSwitchButtonRight() {
     buttonRight.style.right = '20px';
     buttonRight.addEventListener('click', () => {
         clearInterval(autoImageSwitchInterval);
-        setTimeout(restartImageAutoSwitch, 10000);
         switchImage('right');
     })
     return buttonRight
